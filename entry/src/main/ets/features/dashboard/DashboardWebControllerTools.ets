@@ -54,24 +54,6 @@ export class DashboardWebControllerTools {
     if (!Number.isFinite(zoomLevel) || zoomLevel <= 0) {
       return;
     }
-    const zoomScale = zoomLevel / 100;
-    DashboardWebControllerTools.zoom(controller, zoomScale);
-    const zoomScript = `
-      (function() {
-        try {
-          var root = document.documentElement;
-          if (!root) {
-            return;
-          }
-          root.style.zoom = '${zoomScale}';
-          root.style.setProperty('--ha-companion-page-zoom', '${zoomScale}');
-          if (document.body) {
-            document.body.style.minHeight = '100%';
-          }
-        } catch (e) {
-        }
-      })();
-    `;
-    DashboardWebControllerTools.runScript(controller, zoomScript);
+    DashboardWebControllerTools.zoom(controller, zoomLevel / 100);
   }
 }

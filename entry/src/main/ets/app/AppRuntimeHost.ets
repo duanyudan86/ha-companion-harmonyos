@@ -239,6 +239,7 @@ export struct AppRuntimeHost {
   @State dashboardUrl: string = '';
   @State dashboardLoadedUrl: string = '';
   @State dashboardCurrentUrl: string = '';
+  @State dashboardCurrentIsDashboardView: boolean = false;
   @State dashboardClearHistoryPending: boolean = false;
   @State nativeSettingsReturnUrl: string = '';
   @State dashboardBackToHomePending: boolean = false;
@@ -613,6 +614,9 @@ export struct AppRuntimeHost {
   }
 
   canDashboardGoBack(): boolean {
+    if (this.dashboardCurrentIsDashboardView) {
+      return false;
+    }
     try {
       return this.webCtrl.accessBackward();
     } catch (_) {
@@ -957,6 +961,7 @@ export struct AppRuntimeHost {
 
   returnToDashboardFromSettings(): void {
     this.dashboardBackToHomePending = false;
+    this.dashboardCurrentIsDashboardView = false;
     this.nativeSettingsReturnUrl = '';
     this.secureConnectionFromSettings = false;
     this.showDeleteServerDialog = false;
@@ -1038,6 +1043,7 @@ export struct AppRuntimeHost {
     const type = ExternalBusService.type(payload);
     if (type === 'harmony_url_changed') {
       const url = ExternalBusService.stringPayload(payload, 'url', '');
+      this.dashboardCurrentIsDashboardView = ExternalBusService.booleanPayload(payload, 'isDashboardView', false);
       this.rememberDashboardUrl(url);
       if (this.pendingEntityDetailDashboardNavigation) {
         if (!this.isPendingEntityDetailDashboardUrl(url)) {
@@ -1192,6 +1198,7 @@ export struct AppRuntimeHost {
   openDashboard(): void {
     this.ensureMobileAppRegistration('dashboard_opened');
     this.dashboardBackToHomePending = false;
+    this.dashboardCurrentIsDashboardView = false;
     this.nativeSettingsReturnUrl = '';
     DashboardRuntimeService.openDashboard(this, AppRuntimeCallbackFactory.dashboard(this));
     this.handleDashboardConnectionLoadStarted();

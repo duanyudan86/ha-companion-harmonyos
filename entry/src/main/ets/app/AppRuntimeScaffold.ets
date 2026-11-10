@@ -138,7 +138,7 @@ export struct AppRuntimeScaffold {
     .gesture(
       PanGesture({ direction: PanDirection.Horizontal, distance: 24 })
         .onActionEnd((event: GestureEvent) => {
-          if (event.offsetX > 60 || event.offsetX < -60) {
+          if (this.route !== AppRoute.DASHBOARD && (event.offsetX > 60 || event.offsetX < -60)) {
             this.onBackGesture();
           }
         })

@@ -7,6 +7,7 @@ import { ExternalAppProxy } from './ExternalAppProxy';
 import { DashboardWebBridge } from './DashboardWebBridge';
 import { DashboardConnectionErrorDialog } from './DashboardConnectionErrorDialog';
 import { DashboardNoticeService } from './DashboardNoticeService';
+import { DashboardRuntimeService } from './DashboardRuntimeService';
 import { Localization } from '../../shared/i18n/Localization';
 import { NetworkService } from '../../services/NetworkService';
 import { UrlService } from '../../services/UrlService';
@@ -506,6 +507,10 @@ export struct DashboardPage {
     }
   }
 
+  private navigateDashboardView(direction: number): void {
+    DashboardRuntimeService.navigateDashboardView(this.controller, direction);
+  }
+
   private isAudioCaptureRequest(resources: Array<string>): boolean {
     if (resources.length === 0) {
       return false;
@@ -588,14 +593,6 @@ export struct DashboardPage {
             this.dashboardPageReady = true;
             this.rememberDashboardUrl(event.url);
             this.rememberLoadedDashboardUrl(event.url);
-            const zoomLevel = Number(this.pageZoomLevel);
-            if (Number.isFinite(zoomLevel) && zoomLevel > 0) {
-              try {
-                this.controller.zoom(zoomLevel / 100);
-              } catch (_) {
-                // Keep the page usable if the controller rejects the zoom request.
-              }
-            }
             this.runDashboardStartupScript();
             this.refreshDashboardSystemBars();
             this.onPageReady();
@@ -678,5 +675,13 @@ export struct DashboardPage {
     )
     .padding({ top: this.topPadding() })
     .backgroundColor(HaTheme.background(this.isDarkTheme))
+    .parallelGesture(
+      PanGesture({ direction: PanDirection.Horizontal, fingers: 1, distance: 24 })
+        .onActionEnd((event: GestureEvent) => {
+          if (event.offsetX > 60 || event.offsetX < -60) {
+            this.navigateDashboardView(event.offsetX < 0 ? 1 : -1);
+          }
+        })
+    )
   }
 }
