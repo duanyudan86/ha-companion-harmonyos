@@ -207,7 +207,7 @@ HACompanionNext/
 ### 克隆项目
 
 ```powershell
-git clone https://github.com/xiasi0/ha-companion-harmonyos.git
+git clone https://github.com/duanyudan86/ha-companion-harmonyos.git
 cd ha-companion-harmonyos
 ```
 
