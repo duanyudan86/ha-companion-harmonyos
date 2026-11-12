@@ -2578,7 +2578,7 @@ export struct AppRuntimeHost {
 
   handleSettingsAction(actionId: string): void {
     if (actionId === 'report_issue') {
-      const url = 'https://github.com/xiasi0/ha-companion-harmonyos/issues';
+      const url = 'https://github.com/duanyudan86/ha-companion-harmonyos/issues';
       this.openExternalUrl(url);
       return;
     }
