@@ -21,7 +21,6 @@ export interface SettingsInteractionCallbacks {
   setMessage: (message: string) => void;
   refreshSettingsState: () => void;
   applyWindowPreferences: () => void;
-  applyDashboardPreferences: () => void;
   refreshCards: () => void;
   ignoreAppLockTransitions: () => void;
   openServerSettings: () => void;
@@ -137,7 +136,6 @@ export class SettingsInteractionRuntimeService {
     if (actionId === 'toggle_pinch_to_zoom') {
       state.pinchToZoomEnabled = !state.pinchToZoomEnabled;
       callbacks.refreshSettingsState();
-      callbacks.applyDashboardPreferences();
       AppSettingsStore.saveCurrentAppStorage(callbacks.context()).catch((): void => {});
       return;
     }

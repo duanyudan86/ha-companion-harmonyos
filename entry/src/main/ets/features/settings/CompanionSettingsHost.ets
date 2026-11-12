@@ -12,6 +12,7 @@ export struct CompanionSettingsHost {
   @Prop scrollOffset: number = 0;
   @Prop @Watch('syncChoiceDialog') showChoiceDialog: boolean = false;
   @Prop choiceTitle: string = '';
+  @Prop choiceDescription: string = '';
   @Prop choiceSelectedValue: string = '';
   @Prop choiceGroups: SettingChoiceGroup[] = [];
   @Prop dark: boolean = false;
@@ -26,6 +27,7 @@ export struct CompanionSettingsHost {
   private choiceDialogController: CustomDialogController = new CustomDialogController({
     builder: CompanionChoiceDialog({
       title: this.choiceTitle,
+      description: this.choiceDescription,
       selectedValue: this.choiceSelectedValue,
       groups: this.choiceGroups,
       dark: this.dark,

@@ -20,7 +20,6 @@ import { CardRuntimeRepository } from '../features/cards/CardRuntimeRepository';
 
 export interface AppRuntimeCallbackTarget {
   applyWindowPreferences(): void;
-  applyDashboardPreferences(): void;
   applyThemePreferences(): void;
   refreshDashboardTheme(): void;
   prewarmDiscovery(): void;
@@ -96,7 +95,6 @@ export class AppRuntimeCallbackFactory {
   static settingsChoice(target: AppRuntimeCallbackTarget): SettingsChoiceRuntimeCallbacks {
     return {
       applyWindowPreferences: (): void => target.applyWindowPreferences(),
-      applyDashboardPreferences: (): void => target.applyDashboardPreferences(),
       applyThemePreferences: (): void => target.applyThemePreferences(),
       refreshDashboardTheme: (): void => target.refreshDashboardTheme(),
       refreshCards: (): void => target.syncCardServerConnection(),
@@ -117,7 +115,6 @@ export class AppRuntimeCallbackFactory {
       setMessage: (message: string): void => target.setMessage(message),
       refreshSettingsState: (): void => target.refreshSettingsState(),
       applyWindowPreferences: (): void => target.applyWindowPreferences(),
-      applyDashboardPreferences: (): void => target.applyDashboardPreferences(),
       refreshCards: (): void => target.syncCardServerConnection(),
       ignoreAppLockTransitions: (): void => target.ignoreAppLockTransitions(),
       openServerSettings: (): void => target.openServerSettings(),
@@ -182,8 +179,7 @@ export class AppRuntimeCallbackFactory {
   static dashboard(target: AppRuntimeCallbackTarget): DashboardRuntimeCallbacks {
     return {
       applyActiveTheme: (): void => target.applyActiveTheme(),
-      applyWindowPreferences: (): void => target.applyWindowPreferences(),
-      applyDashboardPreferences: (): void => target.applyDashboardPreferences()
+      applyWindowPreferences: (): void => target.applyWindowPreferences()
     };
   }
 
@@ -238,7 +234,6 @@ export class AppRuntimeCallbackFactory {
       refreshCurrentLocationForDiagnostics: (trigger: string): void => target.refreshCurrentLocationForDiagnostics(trigger),
       isIgnoringAppLockTransitions: (): boolean => target.isIgnoringAppLockTransitions(),
       applyWindowPreferences: (): void => target.applyWindowPreferences(),
-      applyDashboardPreferences: (): void => target.applyDashboardPreferences(),
       maybeResetDashboardToFirstView: (): void => target.maybeResetDashboardToFirstView(),
       refreshDashboardTheme: (): void => target.refreshDashboardTheme(),
       prewarmDiscovery: (): void => target.prewarmDiscovery()

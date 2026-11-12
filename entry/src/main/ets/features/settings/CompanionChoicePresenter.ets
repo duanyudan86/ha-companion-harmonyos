@@ -29,6 +29,10 @@ export class CompanionChoicePresenter {
     return '';
   }
 
+  static description(key: string): string {
+    return key === 'display_zoom' ? Localization.t('settings_page_zoom_restart') : '';
+  }
+
   static groups(key: string): SettingChoiceGroup[] {
     if (key === 'display_orientation') {
       return CompanionSettingsData.orientationOptions();

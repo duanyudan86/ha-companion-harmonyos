@@ -976,7 +976,7 @@ export struct AppRuntimeHost {
     this.step = AppRoute.DASHBOARD;
     this.applyThemePreferences();
     this.applyWindowPreferences();
-    this.applyDashboardPreferences();
+    this.runPendingDashboardTasks();
     this.refreshHomeNetworkStatusNow(dashboardHomeUrl)
       .then((): void => {
         if (!this.dashboardInsecureBlocked) {
@@ -1239,8 +1239,7 @@ export struct AppRuntimeHost {
     DashboardRuntimeService.installFrontendUrlObserver(this.webCtrl, this);
   }
 
-  applyDashboardPreferences(): void {
-    DashboardRuntimeService.applyDashboardPreferences(this.webCtrl, this);
+  runPendingDashboardTasks(): void {
     if (this.pendingEntityDetailDashboardNavigation &&
       this.canOpenEntityDetailInCurrentDashboard(this.pendingEntityDetailBaseUrl)) {
       this.pendingEntityDetailDashboardNavigation = false;
@@ -1626,7 +1625,7 @@ export struct AppRuntimeHost {
     this.configSummary = Localization.t('common_not_set');
     this.applyThemePreferences();
     this.applyWindowPreferences();
-    this.applyDashboardPreferences();
+    this.runPendingDashboardTasks();
     this.resetSensorRuntime();
     this.syncPublicSensors('server_switched');
     this.selectedServerSettingsId = serverInstanceId;
@@ -2314,7 +2313,7 @@ export struct AppRuntimeHost {
         this.dashboardBackToHomePending = false;
         this.applyThemePreferences();
         this.applyWindowPreferences();
-        this.applyDashboardPreferences();
+        this.runPendingDashboardTasks();
         this.resetSensorRuntime();
         this.syncPublicSensors('server_switched');
         this.selectedServerSettingsId = serverId;
@@ -2347,7 +2346,7 @@ export struct AppRuntimeHost {
     this.dashboardAuthProvided = false;
     this.nativeSettingsReturnUrl = '';
     this.dashboardBackToHomePending = false;
-    this.applyDashboardPreferences();
+    this.runPendingDashboardTasks();
     this.openDashboard();
     this.forceLoadDashboard(nextDashboardUrl);
   }

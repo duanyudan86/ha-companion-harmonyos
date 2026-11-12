@@ -25,14 +25,6 @@ export class DashboardWebControllerTools {
     }
   }
 
-  static zoom(controller: web_webview.WebviewController, scale: number): void {
-    try {
-      controller.zoom(scale);
-    } catch (_) {
-      // Ignore while the WebView is not attached yet.
-    }
-  }
-
   static refresh(controller: web_webview.WebviewController): void {
     try {
       controller.refresh();
@@ -49,11 +41,4 @@ export class DashboardWebControllerTools {
     }
   }
 
-  static applyZoom(controller: web_webview.WebviewController, pageZoomLevel: string): void {
-    const zoomLevel = Number(pageZoomLevel);
-    if (!Number.isFinite(zoomLevel) || zoomLevel <= 0) {
-      return;
-    }
-    DashboardWebControllerTools.zoom(controller, zoomLevel / 100);
-  }
 }

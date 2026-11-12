@@ -30,7 +30,6 @@ export interface AppForegroundInput {
 export interface AppForegroundDecision {
   shouldLock: boolean;
   shouldApplyWindowPreferences: boolean;
-  shouldApplyDashboardPreferences: boolean;
   message: string;
 }
 
@@ -66,7 +65,6 @@ export class AppStartupCoordinator {
       return {
         shouldLock: false,
         shouldApplyWindowPreferences: false,
-        shouldApplyDashboardPreferences: false,
         message: ''
       };
     }
@@ -74,14 +72,12 @@ export class AppStartupCoordinator {
       return {
         shouldLock: true,
         shouldApplyWindowPreferences: false,
-        shouldApplyDashboardPreferences: false,
         message: Localization.t('app_lock_message')
       };
     }
     return {
       shouldLock: false,
       shouldApplyWindowPreferences: true,
-      shouldApplyDashboardPreferences: true,
       message: ''
     };
   }

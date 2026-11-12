@@ -29,7 +29,7 @@ export interface AppWebRuntimeActionTarget {
   tryLoadWebUrl(url: string): void;
   handleAuthRedirect(url: string): void;
   handleBackNavigation(): boolean;
-  applyDashboardPreferences(): void;
+  runPendingDashboardTasks(): void;
   installFrontendUrlObserver(): void;
   clearPendingDashboardHistory(): void;
   rememberDashboardUrl(url: string): void;
@@ -82,7 +82,7 @@ export class AppWebRuntimeService {
         target.dashboardBridgeReady = true;
       },
       onDashboardPageReady: (): void => {
-        target.applyDashboardPreferences();
+        target.runPendingDashboardTasks();
         target.installFrontendUrlObserver();
         target.clearPendingDashboardHistory();
       },

@@ -77,10 +77,12 @@ export struct DashboardPage {
   private dashboardNoticeStateLoaded: boolean = false;
   private dashboardNoticeAcknowledged: boolean = false;
   @State private dashboardNoticeVisible: boolean = false;
+  @State private startupPageZoomLevel: string = '100';
 
   aboutToAppear(): void {
     this.isDashboardVisible = true;
     this.dashboardPageReady = false;
+    this.startupPageZoomLevel = this.pageZoomLevel;
     this.dashboardNoticeStateLoaded = false;
     this.dashboardNoticeAcknowledged = false;
     this.dashboardNoticeVisible = false;
@@ -500,6 +502,20 @@ export struct DashboardPage {
       `})();`;
   }
 
+  private dashboardViewportScaleScript(): string {
+    const initialScale = (this.startupPageZoomPercent() / 100).toString();
+    return `(function(){` +
+      `var viewport=document.querySelector('meta[name="viewport"]');` +
+      `if(!viewport){return;}` +
+      `var elements=viewport.content.split(',').filter(function(item){` +
+      `var value=item.trim();` +
+      `return value.indexOf('initial-scale')!==0&&value.indexOf('minimum-scale')!==0&&value.indexOf('maximum-scale')!==0;` +
+      `});` +
+      `elements.push('initial-scale=${initialScale}');` +
+      `viewport.content=elements.join(',');` +
+      `})();`;
+  }
+
   private runDashboardStartupScript(): void {
     try {
       this.controller.runJavaScript(this.dashboardChromeObserverScript() + this.haSafeAreaPatchScript()).catch((): void => {});
@@ -509,6 +525,11 @@ export struct DashboardPage {
 
   private navigateDashboardView(direction: number): void {
     DashboardRuntimeService.navigateDashboardView(this.controller, direction);
+  }
+
+  private startupPageZoomPercent(): number {
+    const zoomLevel = Number(this.startupPageZoomLevel);
+    return Number.isFinite(zoomLevel) && zoomLevel > 0 ? zoomLevel : 100;
   }
 
   private isAudioCaptureRequest(resources: Array<string>): boolean {
@@ -555,12 +576,14 @@ export struct DashboardPage {
           .databaseAccess(true)
           .mixedMode(MixedMode.All)
           .darkMode(this.webDarkMode())
+          .initialScale(this.startupPageZoomPercent())
           .zoomAccess(this.pinchToZoomEnabled)
           .forceEnableZoom(this.pinchToZoomEnabled)
           .pinchSmooth(this.pinchToZoomEnabled)
           .mediaPlayGestureAccess(!this.autoPlayVideoEnabled)
           .forceDarkAccess(this.isDarkTheme)
-          .runJavaScriptOnHeadEnd([{ script: this.dashboardChromeObserverScript() + this.haSafeAreaPatchScript(), scriptRules: ['*'] }])
+          .runJavaScriptOnHeadEnd([{ script: this.dashboardViewportScaleScript() +
+            this.dashboardChromeObserverScript() + this.haSafeAreaPatchScript(), scriptRules: ['*'] }])
           .overScrollMode(OverScrollMode.ALWAYS)
           .onPermissionRequest((event) => {
             if (event) {

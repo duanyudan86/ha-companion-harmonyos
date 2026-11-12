@@ -10,6 +10,8 @@ export struct CompanionChoiceDialog {
   @Prop
   title: string = '';
   @Prop
+  description: string = '';
+  @Prop
   selectedValue: string = '';
   @Prop
   groups: SettingChoiceGroup[] = [];
@@ -39,6 +41,14 @@ export struct CompanionChoiceDialog {
         .fontColor(HaTheme.textPrimary(this.dark))
         .width('100%')
         .padding({ left: 24, right: 24, top: 24, bottom: 8 })
+
+      if (this.description.length > 0) {
+        Text(this.description)
+          .fontSize(13)
+          .fontColor(HaTheme.textSecondary(this.dark))
+          .width('100%')
+          .padding({ left: 24, right: 24, bottom: 12 })
+      }
 
       Scroll() {
         Column() {

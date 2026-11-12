@@ -124,6 +124,7 @@ export const EN_US: Map<string, string> = new Map<string, string>([
   ['settings_gestures', 'Gestures'],
   ['settings_orientation', 'Screen orientation'],
   ['settings_page_zoom', 'Page zoom'],
+  ['settings_page_zoom_restart', 'Effective after restarting the app'],
   ['settings_language', 'Language'],
   ['settings_theme', 'Theme'],
   ['settings_section_server_device', 'Servers and devices'],

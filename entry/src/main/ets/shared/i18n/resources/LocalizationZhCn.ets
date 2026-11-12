@@ -126,6 +126,7 @@ export const ZH_CN: Map<string, string> = new Map<string, string>([
   ['settings_gestures', '手势'],
   ['settings_orientation', '屏幕方向'],
   ['settings_page_zoom', '页面缩放'],
+  ['settings_page_zoom_restart', '重启应用生效'],
   ['settings_language', '语言'],
   ['settings_theme', '主题'],
   ['settings_section_server_device', '服务器与设备'],

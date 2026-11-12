@@ -26,7 +26,6 @@ export interface DashboardRuntimeState {
 export interface DashboardRuntimeCallbacks {
   applyActiveTheme: () => void;
   applyWindowPreferences: () => void;
-  applyDashboardPreferences: () => void;
 }
 
 export class DashboardRuntimeService {
@@ -44,7 +43,6 @@ export class DashboardRuntimeService {
     state.dashboardAuthProvided = false;
     callbacks.applyActiveTheme();
     callbacks.applyWindowPreferences();
-    callbacks.applyDashboardPreferences();
     state.message = '';
   }
 
@@ -101,13 +99,6 @@ export class DashboardRuntimeService {
       `if(active<0||target<0||target>=tabs.length){return;}` +
       `tabs[target].click();` +
       `})();`);
-  }
-
-  static applyDashboardPreferences(controller: web_webview.WebviewController, state: DashboardRuntimeState): void {
-    if (!DashboardRuntimeService.isDashboardWebMounted(state)) {
-      return;
-    }
-    DashboardWebControllerTools.applyZoom(controller, state.pageZoomLevel);
   }
 
   static refreshDashboardTheme(controller: web_webview.WebviewController, state: DashboardRuntimeState): void {

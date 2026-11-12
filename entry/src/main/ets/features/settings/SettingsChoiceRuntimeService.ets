@@ -21,7 +21,6 @@ export interface SettingsChoiceRuntimeState {
 
 export interface SettingsChoiceRuntimeCallbacks {
   applyWindowPreferences: () => void;
-  applyDashboardPreferences: () => void;
   applyThemePreferences: () => void;
   refreshDashboardTheme: () => void;
   refreshCards: () => void;
@@ -42,6 +41,10 @@ export class SettingsChoiceRuntimeService {
 
   static dialogTitle(state: SettingsChoiceRuntimeState): string {
     return CompanionChoicePresenter.title(state.companionChoiceDialogKey);
+  }
+
+  static dialogDescription(state: SettingsChoiceRuntimeState): string {
+    return CompanionChoicePresenter.description(state.companionChoiceDialogKey);
   }
 
   static groups(state: SettingsChoiceRuntimeState): SettingChoiceGroup[] {
@@ -93,7 +96,6 @@ export class SettingsChoiceRuntimeService {
     }
     if (key === 'display_zoom') {
       state.pageZoomLevel = value;
-      callbacks.applyDashboardPreferences();
       callbacks.refreshSettingsState();
       return true;
     }

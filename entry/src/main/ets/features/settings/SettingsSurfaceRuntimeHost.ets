@@ -48,6 +48,7 @@ export struct CompanionSettingsSurfaceHost {
       scrollOffset: this.scrollOffset,
       showChoiceDialog: this.showChoiceDialog,
       choiceTitle: SettingsChoiceRuntimeService.dialogTitle(this.choiceState()),
+      choiceDescription: SettingsChoiceRuntimeService.dialogDescription(this.choiceState()),
       choiceSelectedValue: SettingsChoiceRuntimeService.selectedValue(this.choiceState()),
       choiceGroups: SettingsChoiceRuntimeService.groups(this.choiceState()),
       dark: this.dark,
@@ -103,6 +104,7 @@ export struct ServerSettingsSurfaceHost {
   private choiceDialogController: CustomDialogController = new CustomDialogController({
     builder: CompanionChoiceDialog({
       title: SettingsChoiceRuntimeService.dialogTitle(this.choiceState()),
+      description: SettingsChoiceRuntimeService.dialogDescription(this.choiceState()),
       selectedValue: SettingsChoiceRuntimeService.selectedValue(this.choiceState()),
       groups: SettingsChoiceRuntimeService.groups(this.choiceState()),
       dark: this.dark,

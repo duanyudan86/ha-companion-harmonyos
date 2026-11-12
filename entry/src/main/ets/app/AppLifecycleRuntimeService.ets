@@ -51,7 +51,6 @@ export interface AppLifecycleRuntimeCallbacks {
   refreshCurrentLocationForDiagnostics: (trigger: string) => void;
   isIgnoringAppLockTransitions: () => boolean;
   applyWindowPreferences: () => void;
-  applyDashboardPreferences: () => void;
   maybeResetDashboardToFirstView: () => void;
   refreshDashboardTheme: () => void;
   prewarmDiscovery: () => void;
@@ -143,9 +142,6 @@ export class AppLifecycleRuntimeService {
       return;
     }
     callbacks.applyWindowPreferences();
-    if (decision.shouldApplyDashboardPreferences) {
-      callbacks.applyDashboardPreferences();
-    }
   }
 
   static onBackground(state: AppLifecycleRuntimeState, callbacks: AppLifecycleRuntimeCallbacks): void {
